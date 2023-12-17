@@ -37,10 +37,11 @@ model ActivityParameters {
 }
 
 model TimeLogs {
-  ID         Int @id @default(autoincrement())
-  UserID     Int
-  ActivityID Int
-  Time       Int
+  ID             Int @id @default(autoincrement())
+  UserID         Int
+  ActivityID     Int
+  Time           Int
+  RatioAtTheTime Int
 
   // Clés étrangères
   User     Users      @relation(fields: [UserID], references: [ID])
