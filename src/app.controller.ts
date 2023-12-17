@@ -11,6 +11,9 @@ export class LoginDto {
 
   @ApiProperty()
   HashedPassword: string;
+
+  @ApiProperty()
+  Username: string | null;
 }
 
 @Controller()
@@ -30,6 +33,12 @@ export class AppController {
   @ApiBody({ type: LoginDto })
   async login(@Request() req) {
     return this.authService.login(req.user);
+  }
+
+  @Post('auth/register')
+  @ApiBody({ type: LoginDto })
+  async register(@Request() req) {
+    return this.authService.register(req.body);
   }
 
   @UseGuards(JwtAuthGuard)
