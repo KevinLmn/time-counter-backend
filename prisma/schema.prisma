@@ -1,0 +1,47 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  ID                 Int                  @id @default(autoincrement())
+  Username           String
+  Email              String
+  ActivityParameters ActivityParameters[]
+  TimeLogs           TimeLogs[]
+}
+
+model Activities {
+  ID                 Int                  @id @default(autoincrement())
+  ActivityName       String
+  ActivityParameters ActivityParameters[]
+  TimeLogs           TimeLogs[]
+}
+
+model ActivityParameters {
+  ID           Int    @id @default(autoincrement())
+  UserID       Int
+  ActivityID   Int
+  Ratio String
+
+  User     Users      @relation(fields: [UserID], references: [ID])
+  Activity Activities @relation(fields: [ActivityID], references: [ID])
+}
+
+model TimeLogs {
+  ID         Int @id @default(autoincrement())
+  UserID     Int
+  ActivityID Int
+  Time       Int
+
+  // Clés étrangères
+  User     Users      @relation(fields: [UserID], references: [ID])
+  Activity Activities @relation(fields: [ActivityID], references: [ID])
+}
