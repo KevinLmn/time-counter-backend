@@ -13,7 +13,8 @@ datasource db {
 model Users {
   ID                 Int                  @id @default(autoincrement())
   Username           String
-  Email              String
+  Email              String               @unique
+  HashedPassword     String
   ActivityParameters ActivityParameters[]
   TimeLogs           TimeLogs[]
 }
@@ -26,10 +27,10 @@ model Activities {
 }
 
 model ActivityParameters {
-  ID           Int    @id @default(autoincrement())
-  UserID       Int
-  ActivityID   Int
-  Ratio String
+  ID         Int    @id @default(autoincrement())
+  UserID     Int
+  ActivityID Int
+  Ratio      String
 
   User     Users      @relation(fields: [UserID], references: [ID])
   Activity Activities @relation(fields: [ActivityID], references: [ID])

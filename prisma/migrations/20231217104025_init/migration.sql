@@ -2,6 +2,7 @@
 CREATE TABLE `Users` (
     `ID` INTEGER NOT NULL AUTO_INCREMENT,
     `Username` VARCHAR(191) NOT NULL,
+    `HashedPassword` VARCHAR(191) NOT NULL,
     `Email` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`ID`)

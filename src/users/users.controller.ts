@@ -1,18 +1,17 @@
-import { Controller, Post, Body, Get } from '@nestjs/common';
-import { PrismaService } from 'prisma/prisma.service';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ApiBody, ApiProperty } from '@nestjs/swagger';
+import { PrismaService } from 'prisma/prisma.service';
 import { UserModel } from './users.model';
-import { PostModel } from 'src/posts/post.model';
 
 export class CreateUserDto {
   @ApiProperty()
-  email: string;
+  Email: string;
 
   @ApiProperty()
-  name: string | null;
+  HashedPassword: string;
 
   @ApiProperty()
-  posts?: PostModel[];
+  Username: string | null;
 }
 
 @Controller('users')
@@ -21,19 +20,19 @@ export class UsersController {
 
   @Get()
   async getUsers(): Promise<UserModel[]> {
-    return await this.prisma.user.findMany();
+    const users = await this.prisma.users.findMany();
+    return users.map((user) => ({
+      id: user.ID,
+      Email: user.Email,
+      Username: user.Username,
+    }));
   }
 
   @Post()
   @ApiBody({ type: CreateUserDto })
   async createUser(@Body() data: CreateUserDto): Promise<UserModel> {
-    return await this.prisma.user.create({
-      data: {
-        ...data,
-        posts: {
-          create: data.posts,
-        },
-      },
+    return await this.prisma.users.create({
+      data,
     });
   }
 }

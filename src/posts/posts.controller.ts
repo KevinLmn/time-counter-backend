@@ -1,7 +1,6 @@
-import { Controller, Post, Body, Get } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
+import { ApiProperty } from '@nestjs/swagger';
 import { PrismaService } from 'prisma/prisma.service';
-import { PostModel } from './post.model';
-import { ApiBody, ApiProperty } from '@nestjs/swagger';
 
 export class CreatePostDto {
   @ApiProperty()
@@ -15,21 +14,21 @@ export class CreatePostDto {
 export class PostsController {
   constructor(private readonly prisma: PrismaService) {}
 
-  @Get()
-  async getPosts(): Promise<PostModel[]> {
-    return await this.prisma.post.findMany();
-  }
+  // @Get()
+  // async getPosts(): Promise<PostModel[]> {
+  //   return await this.prisma.post.findMany();
+  // }
 
-  @Post()
-  @ApiBody({ type: CreatePostDto })
-  async createPost(@Body() data: CreatePostDto): Promise<PostModel> {
-    return await this.prisma.post.create({
-      data: {
-        ...data,
-        author: {
-          connect: { id: 1 },
-        },
-      },
-    });
-  }
+  // @Post()
+  // @ApiBody({ type: CreatePostDto })
+  // async createPost(@Body() data: CreatePostDto): Promise<PostModel> {
+  //   return await this.prisma.post.create({
+  //     data: {
+  //       ...data,
+  //       author: {
+  //         connect: { id: 1 },
+  //       },
+  //     },
+  //   });
+  // }
 }
