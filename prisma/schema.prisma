@@ -21,7 +21,7 @@ model Users {
 
 model Activities {
   ID                 Int                  @id @default(autoincrement())
-  ActivityName       String
+  ActivityName       String               @unique
   ActivityParameters ActivityParameters[]
   TimeLogs           TimeLogs[]
 }
@@ -37,13 +37,13 @@ model ActivityParameters {
 }
 
 model TimeLogs {
-  ID             Int @id @default(autoincrement())
+  ID             Int     @id @default(autoincrement())
   UserID         Int
   ActivityID     Int
   Time           Int
   RatioAtTheTime Int
+  isLeisure      Boolean
 
-  // Clés étrangères
   User     Users      @relation(fields: [UserID], references: [ID])
   Activity Activities @relation(fields: [ActivityID], references: [ID])
 }
